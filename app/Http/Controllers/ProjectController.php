@@ -100,9 +100,27 @@ class ProjectController extends Controller
         //
     }
 
-    public function datatable(){
-        $data = Project::with('client')->get();
-        return DataTables::of($data)->make();
+    public function datatable(Request $request){
+        $data = Project::query()->with('client');
+        return datatables()->eloquent($data)
+            ->filter(function ($instance) use ($request) {
+
+                if ($request->get('project_name')) {
+
+                    $instance->where('project_name', 'LIKE', '%' . $request->project_name . '%');
+                }
+
+                if ($request->get('client_id')) {
+
+                    $instance->where('client_id', $request->client_id);
+                }
+
+                if ($request->get('status')) {
+
+                    $instance->where('project_status', $request->status);
+                }
+            })
+            ->make();
     }
 
     public function deleteSelected(Request $request){
