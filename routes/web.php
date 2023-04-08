@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('event.upcoming-event');
+});
 Route::get('/dashboard', function () {
     return view('contents.dashboard');
 })->name('dashboard');
+
+Route::get('/project-datatable', [ProjectController::class, 'datatable'])->name('project-datatable');
+Route::post('/delete-selected', [ProjectController::class, 'deleteSelected'])->name('delete-selected');
+Route::resource('/project', ProjectController::class);
+
+Route::get('/client-select2', [ClientController::class, 'select2'])->name('client-select2');
+
