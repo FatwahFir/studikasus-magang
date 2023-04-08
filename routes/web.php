@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
@@ -16,11 +17,9 @@ use App\Http\Controllers\ProjectController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $client = Client::get();
+    return view('contents.project', compact('client'));
 });
-Route::get('/dashboard', function () {
-    return view('contents.dashboard');
-})->name('dashboard');
 
 Route::get('/project-datatable', [ProjectController::class, 'datatable'])->name('project-datatable');
 Route::post('/delete-selected', [ProjectController::class, 'deleteSelected'])->name('delete-selected');

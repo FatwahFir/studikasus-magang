@@ -158,6 +158,12 @@
                 }
             },
             {
+                targets: [4,5],
+                render: function(data, type, full, meta){
+                    return moment(data).format('DD MMMM YYYY');
+                }
+            },
+            {
                 targets: 2,
                 createdCell: function(td, cellData, rowData, row, col) {
                     $(td).html($(td).text())
